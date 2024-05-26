@@ -10,6 +10,7 @@ building_ai_emporium = {
 	potential = {
 		has_branch_office = yes
 		branch_office_owner = {
+			is_ai = no
 			is_synth_corporate = yes
 			has_country_flag = synth_physical
 		}
@@ -17,14 +18,6 @@ building_ai_emporium = {
 
 	planet_modifier = {
 		planet_jobs_produces_mult = 0.05
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			branch_office_owner = { is_criminal_syndicate = yes }
-		}
-		planet_crime_add = 20
-		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
 	resources = {
@@ -65,17 +58,10 @@ building_clear_thought_clinic = {
 	potential = {
 		has_branch_office = yes
 		branch_office_owner = {
+			is_ai = no
 			is_synth_corporate = yes
 			has_country_flag = synth_virtual
 		}
-	}
-
-	triggered_planet_modifier = {
-		potential = {
-			branch_office_owner = { is_criminal_syndicate = yes }
-		}
-		planet_crime_add = 20
-		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
 	planet_modifier = {
