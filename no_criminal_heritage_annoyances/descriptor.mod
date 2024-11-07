@@ -9,5 +9,5 @@ tags={
 	"Gameplay"
 	"Overhaul"
 }
-supported_version="3.12.*"
+supported_version="v3.14.*"
 path="mod/no_criminal_heritage_annoyances"
