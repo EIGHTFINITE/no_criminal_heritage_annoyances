@@ -10,6 +10,7 @@ building_ai_emporium = {
 	potential = {
 		has_branch_office = yes
 		branch_office_owner = {
+			is_ai = no
 			is_synth_corporate = yes
 			has_country_flag = synth_physical
 		}
@@ -38,16 +39,23 @@ building_ai_emporium = {
 		}
 	}
 
+	triggered_planet_modifier = {
+		potential = {
+			branch_office_owner = { is_criminal_syndicate = yes }
+		}
+		monthly_loyalty = -0.2
+	}
+
 	planet_modifier = {
 		job_roboticist_branch_office_value_mult = 0.10
 		job_identity_designer_add = 1
 	}
 
-	triggered_planet_modifier = {
+	triggered_country_modifier = {
 		potential = {
 			branch_office_owner = { is_criminal_syndicate = yes }
 		}
-		planet_crime_add = 20
+		planet_crime_add = 2
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -95,6 +103,7 @@ building_clear_thought_clinic = {
 	potential = {
 		has_branch_office = yes
 		branch_office_owner = {
+			is_ai = no
 			is_synth_corporate = yes
 			has_country_flag = synth_virtual
 		}
@@ -104,7 +113,14 @@ building_clear_thought_clinic = {
 		potential = {
 			branch_office_owner = { is_criminal_syndicate = yes }
 		}
-		planet_crime_add = 20
+		monthly_loyalty = -0.2
+	}
+
+	triggered_country_modifier = {
+		potential = {
+			branch_office_owner = { is_criminal_syndicate = yes }
+		}
+		planet_crime_add = 2
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 

@@ -126,7 +126,10 @@ building_virtual_entertainment_studios = {
 
 	potential = {
 		has_branch_office = yes
-		branch_office_owner = { is_criminal_syndicate = no }
+		branch_office_owner = {
+			is_ai = no
+			is_criminal_syndicate = no
+		}
 	}
 
 	planet_modifier = {
@@ -327,8 +330,14 @@ building_amusement_megaplex = {
 
 	potential = {
 		has_branch_office = yes
-		branch_office_owner = { is_criminal_syndicate = no }
-		branch_office_owner = { NOT = { has_origin = origin_toxic_knights } }
+		branch_office_owner = {
+			is_ai = no
+			is_criminal_syndicate = no
+			OR = {
+				NOT = { has_origin = origin_toxic_knights }
+				has_country_flag = quest_abandoned
+			}
+		}
 	}
 
 	planet_modifier = {
@@ -409,11 +418,7 @@ building_corporate_embassy = {
 	allow = {
 		custom_tooltip = {
 			fail_text = "requires_building_major_capital"
-			OR = {
-				has_building = building_major_capital
-				has_building = building_system_capital
-				has_building = building_imperial_capital
-			}
+			has_major_upgraded_capital = yes
 		}
 	}
 
@@ -461,7 +466,7 @@ building_wildcat_miners = {
 
 	owner_type = corporate
 
-	category = government
+	category = resource
 
 	potential = {
 		has_branch_office = yes
@@ -478,11 +483,12 @@ building_wildcat_miners = {
 	}
 
 	planet_modifier = {
-		trade_value_add = 5
+		monthly_loyalty = -0.25
+		job_miner_add = 1
 	}
 
-	triggered_planet_modifier = {
-		planet_crime_add = 25
+	triggered_country_modifier = {
+		planet_crime_add = 2.5
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -525,11 +531,42 @@ building_bio_reprocessing_facilities = {
 	}
 
 	planet_modifier = {
-		trade_value_add = 5
+		monthly_loyalty = -0.25
 	}
 
 	triggered_planet_modifier = {
-		planet_crime_add = 25
+		potential = {
+			exists = owner
+			owner = {
+				OR = {
+					is_anglers_empire = no
+					AND = {
+						is_anglers_empire = yes
+						PREV = { planet = { is_wet = no } }
+					}
+				}
+			}
+		}
+		modifier = {
+			job_farmer_add = 1
+		}
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			exists = owner
+			owner = {
+				is_anglers_empire = yes
+				PREV = { planet = { is_wet = yes } }
+			}
+		}
+		modifier = {
+			job_angler_add = 1
+		}
+	}
+
+	triggered_country_modifier = {
+		planet_crime_add = 2.5
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -560,15 +597,19 @@ building_underground_chemists = {
 
 	potential = {
 		has_branch_office = yes
-		branch_office_owner = { is_criminal_syndicate = yes }
+		branch_office_owner = {
+			is_ai = no
+			is_criminal_syndicate = yes
+		}
 	}
 
 	planet_modifier = {
-		trade_value_add = 5
+		monthly_loyalty = -0.25
+		job_clerk_add = 2
 	}
 
-	triggered_planet_modifier = {
-		planet_crime_add = 25
+	triggered_country_modifier = {
+		planet_crime_add = 2.5
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -624,11 +665,12 @@ building_wrecking_yards = {
 	}
 
 	planet_modifier = {
-		trade_value_add = 5
+		monthly_loyalty = -0.25
+		job_clerk_add = 2
 	}
 
-	triggered_planet_modifier = {
-		planet_crime_add = 25
+	triggered_country_modifier = {
+		planet_crime_add = 2.5
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -670,12 +712,13 @@ building_pirate_haven = {
 	}
 
 	planet_modifier = {
+		monthly_loyalty = -0.4
 		job_soldier_add = 1
 		army_starting_experience_add = 100
 	}
 
-	triggered_planet_modifier = {
-		planet_crime_add = 40
+	triggered_country_modifier = {
+		planet_crime_add = 4
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -704,15 +747,23 @@ building_underground_clubs = {
 
 	potential = {
 		has_branch_office = yes
-		branch_office_owner = { is_criminal_syndicate = yes }
+		branch_office_owner = {
+			is_ai = no
+			is_criminal_syndicate = yes
+			OR = {
+				NOT = { has_origin = origin_toxic_knights }
+				has_country_flag = quest_abandoned
+			}
+		}
 	}
 
 	planet_modifier = {
+		monthly_loyalty = -0.4
 		planet_amenities_add = 10
 	}
 
-	triggered_planet_modifier = {
-		planet_crime_add = 40
+	triggered_country_modifier = {
+		planet_crime_add = 4
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -756,7 +807,7 @@ building_syndicate_outreach_office = {
 
 	owner_type = corporate
 
-	category = government
+	category = unity
 
 	potential = {
 		has_branch_office = yes
@@ -764,11 +815,12 @@ building_syndicate_outreach_office = {
 	}
 
 	planet_modifier = {
+		monthly_loyalty = -0.4
 		job_clerk_add = 2
 	}
 
-	triggered_planet_modifier = {
-		planet_crime_add = 40
+	triggered_country_modifier = {
+		planet_crime_add = 4
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -786,7 +838,7 @@ building_syndicate_outreach_office = {
 	}
 
 	ai_weight = {
-		weight = 5
+		weight = 2
 	}
 }
 
@@ -804,11 +856,12 @@ building_illicit_research_labs = {
 	}
 
 	planet_modifier = {
+		monthly_loyalty = -0.4
 		job_clerk_add = 2
 	}
 
-	triggered_planet_modifier = {
-		planet_crime_add = 40
+	triggered_country_modifier = {
+		planet_crime_add = 4
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -847,12 +900,13 @@ building_smuggling_rings = {
 	}
 
 	planet_modifier = {
+		monthly_loyalty = -0.5
 		branch_office_value_mult = 0.25
 		job_merchant_add = 1
 	}
 
-	triggered_planet_modifier = {
-		planet_crime_add = 50
+	triggered_country_modifier = {
+		planet_crime_add = 5
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -867,7 +921,7 @@ building_smuggling_rings = {
 	}
 
 	ai_weight = {
-		weight = 100
+		weight = 50
 	}
 }
 
@@ -887,11 +941,7 @@ building_disinformation_center = {
 	allow = {
 		custom_tooltip = {
 			fail_text = "requires_building_major_capital"
-			OR = {
-				has_building = building_major_capital
-				has_building = building_system_capital
-				has_building = building_imperial_capital
-			}
+			has_major_upgraded_capital = yes
 		}
 	}
 
@@ -905,16 +955,18 @@ building_disinformation_center = {
 	}
 
 	country_modifier = {
+		diplo_weight_economy_mult = 0.05
 		spy_network_levels_add = 5
 	}
 
 	planet_modifier = {
+		monthly_loyalty = -0.4
 		pop_government_ethic_attraction = -0.25
 		job_clerk_add = 2
 	}
 
-	triggered_planet_modifier = {
-		planet_crime_add = 40
+	triggered_country_modifier = {
+		planet_crime_add = 4
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -930,6 +982,12 @@ building_disinformation_center = {
 
 	ai_weight = {
 		weight = 50
+		modifier = {
+			factor = 10
+			branch_office_owner = {
+				is_galactic_community_member = yes
+			}
+		}
 	}
 }
 
@@ -948,12 +1006,13 @@ building_subversive_shrine = {
 		}
 	}
 	planet_modifier = {
+		monthly_loyalty = -0.25
 		job_preacher_add = 2
-		pop_ethic_spiritualist_attraction_mult = 0.25
+		pop_ethic_spiritualist_attraction_mult = 0.5
 	}
 
-	triggered_planet_modifier = {
-		planet_crime_add = 25
+	triggered_country_modifier = {
+		planet_crime_add = 2.5
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -964,7 +1023,7 @@ building_subversive_shrine = {
 			}
 		}
 		pop_ethics_shift_speed_mult = 0.05
-		mult = value:councilor_level|TYPE|councilor_gospel_of_the_masses|
+		mult = value:branch_office_councilor_level|TYPE|councilor_gospel_of_the_masses|
 	}
 
 	resources = {
@@ -1178,6 +1237,7 @@ building_knightly_theme_park = {
 	potential = {
 		has_branch_office = yes
 		branch_office_owner = {
+			is_ai = no
 			has_origin = origin_toxic_knights
 			NOT = { has_country_flag = quest_abandoned }
 		}
@@ -1225,7 +1285,10 @@ building_corporate_clinics = {
 
 	potential = {
 		has_branch_office = yes
-		branch_office_owner = { has_valid_civic = civic_private_healthcare_corporate }
+		branch_office_owner = {
+			is_ai = no
+			has_valid_civic = civic_private_healthcare_corporate
+		}
 	}
 
 	on_built = {
@@ -1244,7 +1307,14 @@ building_corporate_clinics = {
 		potential = {
 			branch_office_owner = { is_criminal_syndicate = yes }
 		}
-		planet_crime_add = 20
+		monthly_loyalty = -0.2
+	}
+
+	triggered_country_modifier = {
+		potential = {
+			branch_office_owner = { is_criminal_syndicate = yes }
+		}
+		planet_crime_add = 2
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -1311,16 +1381,23 @@ building_augmentation_bazaars_branch = {
 
 
 	triggered_planet_modifier = {
+		potential = {
+			branch_office_owner = { is_criminal_syndicate = yes }
+		}
+		monthly_loyalty = -0.2
+	}
+
+	triggered_planet_modifier = {
 		trade_value_mult = 0.10
 		job_augmentor_add = 2
 	}
 
-	triggered_planet_modifier = {
+	triggered_country_modifier = {
 		potential = {
 			exists = branch_office_owner
 			branch_office_owner = { is_criminal_syndicate = yes }
 		}
-		planet_crime_add = 20
+		planet_crime_add = 2
 		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
 	}
 
@@ -1381,21 +1458,7 @@ building_augmentation_bazaars_branch = {
 		text = job_augmentor_research_effect_desc
 	}
 
-	ai_resource_production = {
-		energy = 5
-		trigger = {
-			solar_system = {
-				has_system_trade_value >= 50
-			}
-		}
-	}
-
-	ai_resource_production = {
-		energy = 3
-		trigger = {
-			solar_system = {
-				has_system_trade_value >= 80
-			}
-		}
+	ai_weight = {
+		weight = 100
 	}
 }
