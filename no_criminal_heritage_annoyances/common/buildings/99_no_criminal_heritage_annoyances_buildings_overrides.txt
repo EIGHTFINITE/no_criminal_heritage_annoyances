@@ -10,14 +10,51 @@ building_ai_emporium = {
 	potential = {
 		has_branch_office = yes
 		branch_office_owner = {
-			is_ai = no
 			is_synth_corporate = yes
 			has_country_flag = synth_physical
 		}
 	}
 
+	allow = {
+		custom_tooltip = {
+			fail_text = building_ai_emporium_fail_tt
+			planet.owner = {
+				NOT = {
+					any_owned_planet = {
+						has_branch_office = yes
+						has_holding = {
+							holding = building_ai_emporium
+							owner = root.branch_office_owner
+						}
+					}
+				}
+			}
+		}
+		custom_tooltip = {
+			fail_text = building_ai_emporium_outlawed_robots_tt
+			planet.owner = {
+				NOT = { has_policy_flag = robots_outlawed }
+			}
+		}
+	}
+
 	planet_modifier = {
-		planet_jobs_produces_mult = 0.05
+		job_roboticist_branch_office_value_mult = 0.10
+		job_identity_designer_add = 1
+	}
+
+	triggered_planet_modifier = {
+		potential = {
+			branch_office_owner = { is_criminal_syndicate = yes }
+		}
+		planet_crime_add = 20
+		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
+	}
+
+	on_built = {
+		planet.owner = {
+			create_built_robot_species = yes
+		}
 	}
 
 	resources = {
@@ -58,15 +95,23 @@ building_clear_thought_clinic = {
 	potential = {
 		has_branch_office = yes
 		branch_office_owner = {
-			is_ai = no
 			is_synth_corporate = yes
 			has_country_flag = synth_virtual
 		}
 	}
 
+	triggered_planet_modifier = {
+		potential = {
+			branch_office_owner = { is_criminal_syndicate = yes }
+		}
+		planet_crime_add = 20
+		mult = branch_office_owner.value:scripted_modifier_mult|MODIFIER|branch_office_holding_crime_mult|
+	}
+
 	planet_modifier = {
-		trade_value_mult = 0.05
+		trade_value_mult = 0.10
 		pop_happiness = -0.05
+		job_clerk_add = 2
 	}
 
 	resources = {
@@ -75,8 +120,8 @@ building_clear_thought_clinic = {
 			minerals = @b3_minerals
 		}
 		produces = {
-			energy = 5
-			consumer_goods = 3
+			energy = 10
+			society_research = 10
 		}
 	}
 
